@@ -1,4 +1,4 @@
-package local.textilefence
+package de.interaktiv.textilepreview
 
 import org.eclipse.mylyn.wikitext.parser.MarkupParser
 import org.eclipse.mylyn.wikitext.parser.builder.HtmlDocumentBuilder
@@ -22,7 +22,7 @@ object TextileRenderer {
     )
     private val IMG_SRC = Regex("""(<img\b[^>]*\bsrc=")([^"]+)(")""")
     private const val IMAGE_SEARCH_DEPTH = 3
-    private const val COLLAPSE_DEFAULT_LABEL = "Anzeigen"
+    private const val COLLAPSE_DEFAULT_LABEL = "Show"
 
     /** [baseDir] is the folder of the Markdown file, used to find images. */
     fun render(source: String, baseDir: Path?): String {

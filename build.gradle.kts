@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.19.0"
 }
 
-group = "local.textilefence"
+group = "de.interaktiv"
 version = "0.1.0"
 
 kotlin {
@@ -25,7 +25,13 @@ dependencies {
     testImplementation("org.opentest4j:opentest4j:1.3.0")
 
     intellijPlatform {
-        local(providers.gradleProperty("platformLocalPath").get())
+        // A locally installed IDE saves the download, e.g. in ~/.gradle/gradle.properties.
+        val localPath = providers.gradleProperty("platformLocalPath").orNull
+        if (localPath.isNullOrBlank()) {
+            pycharm(providers.gradleProperty("platformVersion"))
+        } else {
+            local(localPath)
+        }
         bundledPlugin("org.intellij.plugins.markdown")
         testFramework(TestFrameworkType.Platform)
     }

@@ -1,4 +1,4 @@
-package local.textilefence
+package de.interaktiv.textilepreview
 
 import org.intellij.plugins.markdown.extensions.MarkdownBrowserPreviewExtension
 import org.intellij.plugins.markdown.ui.preview.MarkdownHtmlPanel

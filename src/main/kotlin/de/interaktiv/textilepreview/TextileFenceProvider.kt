@@ -1,4 +1,4 @@
-package local.textilefence
+package de.interaktiv.textilepreview
 
 import com.intellij.openapi.diagnostic.logger
 import org.intellij.markdown.ast.ASTNode
@@ -22,7 +22,7 @@ internal class TextileFenceProvider : MarkdownCodeFenceCacheableProvider(null) {
         } catch (e: Exception) {
             // Keep the preview usable while typing half-finished markup.
             LOG.warn("Textile rendering failed", e)
-            "<p class=\"textile-fence-error\">Textile konnte nicht gerendert werden: ${e.message.orEmpty().escaped()}</p>"
+            "<p class=\"textile-fence-error\">Could not render Textile:${e.message.orEmpty().escaped()}</p>"
         }
         return "<div class=\"textile-fence\">$body</div>"
     }

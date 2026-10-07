@@ -1,4 +1,4 @@
-package local.textilefence
+package de.interaktiv.textilepreview
 
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.LocalFileSystem

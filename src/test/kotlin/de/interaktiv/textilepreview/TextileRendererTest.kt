@@ -1,4 +1,4 @@
-package local.textilefence
+package de.interaktiv.textilepreview
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -37,7 +37,7 @@ class TextileRendererTest {
     @Test
     fun `collapse without argument gets the default label`() {
         val html = TextileRenderer.render("{{collapse\ninnen\n}}", null)
-        assertTrue(html, "<summary>Anzeigen</summary>" in html)
+        assertTrue(html, "<summary>Show</summary>" in html)
     }
 
     @Test

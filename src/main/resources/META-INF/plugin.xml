@@ -1,7 +1,7 @@
 <idea-plugin>
-  <id>local.textilefence</id>
-  <name>Textile Fence Preview</name>
-  <vendor>local</vendor>
+  <id>de.interaktiv.textilepreview</id>
+  <name>Textile Preview</name>
+  <vendor url="https://www.interaktiv.de">Interaktiv GmbH</vendor>
   <description><![CDATA[
     Renders <code>```textile</code> code fences in the Markdown preview,
     with a few Redmine extras: the <code>{{collapse}}</code> macro and
@@ -13,7 +13,7 @@
 
   <extensions defaultExtensionNs="org.intellij.markdown">
     <!-- "first": the built-in highlighter accepts every fence language -->
-    <fenceGeneratingProvider order="first" implementation="local.textilefence.TextileFenceProvider"/>
-    <browserPreviewExtensionProvider implementation="local.textilefence.TextileStylesExtension$Provider"/>
+    <fenceGeneratingProvider order="first" implementation="de.interaktiv.textilepreview.TextileFenceProvider"/>
+    <browserPreviewExtensionProvider implementation="de.interaktiv.textilepreview.TextileStylesExtension$Provider"/>
   </extensions>
 </idea-plugin>
