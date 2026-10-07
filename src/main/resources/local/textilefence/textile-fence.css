@@ -1,0 +1,62 @@
+/* ```textile fences: the Markdown plugin wraps them in <pre><code>, undo the code look. */
+pre.code-fence:has(> code.language-textile) {
+  position: relative;
+  font: inherit;
+  white-space: normal;
+  overflow: visible;
+  padding: 2px 16px;
+  background: transparent;
+  border-left: 3px solid rgba(100, 150, 220, 0.6);
+  border-radius: 0;
+}
+
+pre.code-fence > code.language-textile {
+  display: block;
+  font: inherit;
+  white-space: normal;
+}
+
+/* Inline @code@ */
+.textile-fence code {
+  font: 0.9em "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  padding: 0.2em 0.4em;
+  margin: 2px;
+  border-radius: 3px;
+  background-color: rgba(127, 127, 127, 0.15);
+  white-space: normal;
+}
+
+/* pre. and bc. blocks */
+.textile-fence pre {
+  font: 0.85em "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  white-space: pre;
+  overflow: auto;
+  padding: 12px;
+  background-color: rgba(127, 127, 127, 0.1);
+}
+
+.textile-fence pre code {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  white-space: pre;
+}
+
+.textile-fence table {
+  border-collapse: collapse;
+}
+
+.textile-fence td,
+.textile-fence th {
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  padding: 6px 13px;
+  vertical-align: top;
+}
+
+.textile-fence details > summary {
+  cursor: pointer;
+}
+
+.textile-fence-error {
+  color: #d9534f;
+}

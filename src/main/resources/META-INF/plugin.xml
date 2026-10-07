@@ -1,0 +1,19 @@
+<idea-plugin>
+  <id>local.textilefence</id>
+  <name>Textile Fence Preview</name>
+  <vendor>local</vendor>
+  <description><![CDATA[
+    Renders <code>```textile</code> code fences in the Markdown preview,
+    with a few Redmine extras: the <code>{{collapse}}</code> macro and
+    images referenced by file name only.
+  ]]></description>
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends>org.intellij.plugins.markdown</depends>
+
+  <extensions defaultExtensionNs="org.intellij.markdown">
+    <!-- "first": the built-in highlighter accepts every fence language -->
+    <fenceGeneratingProvider order="first" implementation="local.textilefence.TextileFenceProvider"/>
+    <browserPreviewExtensionProvider implementation="local.textilefence.TextileStylesExtension$Provider"/>
+  </extensions>
+</idea-plugin>
