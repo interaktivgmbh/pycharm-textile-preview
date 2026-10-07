@@ -35,6 +35,15 @@ class TextileFencePreviewTest : BasePlatformTestCase() {
         assertTrue(html, "src=\"bilder/a1-name.png\"" in html)
     }
 
+    fun `test pre code block is colored by the IDE highlighter`() {
+        val text = "```textile\n<pre><code class=\"xml\"><a href=\"x\">text</a></code></pre>\n```\n"
+        val file = myFixture.configureByText("entwurf.md", text).virtualFile
+
+        val html = MarkdownUtil.generateMarkdownHtml(file, text, project)
+
+        assertTrue(html, Regex("<code class=\"language-xml\">&lt;<span style=\"color:#[0-9a-f]{6}\">a</span>").containsMatchIn(html))
+    }
+
     fun `test other fences are left to the built-in highlighter`() {
         val text = "```python\nprint('x')\n```\n"
         val file = myFixture.configureByText("entwurf.md", text).virtualFile

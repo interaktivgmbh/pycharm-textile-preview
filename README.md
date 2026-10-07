@@ -34,7 +34,8 @@ Users without a location see an empty start page.
 
 1. Download the ZIP from the [latest release](https://github.com/interaktivgmbh/pycharm-textile-preview/releases/latest).
 2. In PyCharm: *Settings → Plugins → ⚙ → Install Plugin from Disk…*, no restart needed.
-3. Open [`example/example.md`](example/example.md) and switch the editor to *Editor and Preview*.
+3. Clone this repository, open it as a project and open [`example/example.md`](example/example.md)
+   in *Editor and Preview* mode.
 
 ## What you get
 
@@ -43,11 +44,13 @@ Users without a location see an empty start page.
 - Redmine extras: `{{collapse(Label) ... }}` becomes a collapsible section, and `!image.png!`
   without a path is found in the folder of the Markdown file or below it (in Redmine these
   would be ticket attachments).
+- Redmine code blocks like `<pre><code class="python">` are colored by the IDE's own syntax
+  highlighter, in your color scheme, for every language your IDE knows.
 - The copy button on the block copies the raw Textile, ready to paste into Redmine.
 
 ## How it works
 
-The whole plugin is less than 150 lines of Kotlin, so it is easy to read and to fork.
+The whole plugin is less than 200 lines of Kotlin, so it is easy to read and to fork.
 
 The Markdown plugin hands every fenced code block to registered "fence providers". This is the
 same mechanism that draws Mermaid and PlantUML diagrams in the preview.
@@ -55,7 +58,7 @@ same mechanism that draws Mermaid and PlantUML diagrams in the preview.
 | File | Job |
 |---|---|
 | [`TextileFenceProvider`](src/main/kotlin/de/interaktiv/textilepreview/TextileFenceProvider.kt) | Claims fences with the language `textile` and finds the folder of the Markdown file. |
-| [`TextileRenderer`](src/main/kotlin/de/interaktiv/textilepreview/TextileRenderer.kt) | Turns Textile into HTML with [Mylyn WikiText](https://github.com/eclipse-mylyn/org.eclipse.mylyn/tree/main/mylyn.docs/wikitext), plus the Redmine bits. |
+| [`TextileRenderer`](src/main/kotlin/de/interaktiv/textilepreview/TextileRenderer.kt) | Turns Textile into HTML with [Mylyn WikiText](https://github.com/eclipse-mylyn/org.eclipse.mylyn/tree/main/mylyn.docs/wikitext), plus the Redmine bits. Code blocks go to the same highlighter that colors Markdown code fences. |
 | [`TextileStylesExtension`](src/main/kotlin/de/interaktiv/textilepreview/TextileStylesExtension.kt) | Adds a stylesheet so the block reads like text, not like code. |
 
 **Want a preview for another markup?** Mylyn WikiText also ships parsers for Confluence,
@@ -88,6 +91,8 @@ generation of the Markdown plugin with this plugin loaded, without opening a win
 - Only tested with PyCharm. Other JetBrains IDEs 2026.2 with the bundled Markdown plugin should
   work as well.
 - The experimental Compose preview does not show the rendered block, the default preview does.
+- The Markdown preview loads local images only for files inside the open project. This is a rule
+  of the preview itself and applies to normal Markdown images as well.
 - Mylyn is not Redmine's own Textile renderer (RedCloth), so small differences are possible.
   Issue links like `#1234` are not linked and nested `collapse` macros are not supported.
 

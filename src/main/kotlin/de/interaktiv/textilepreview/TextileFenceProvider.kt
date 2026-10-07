@@ -1,8 +1,10 @@
 package de.interaktiv.textilepreview
 
+import com.intellij.markdown.utils.lang.HtmlSyntaxHighlighter
 import com.intellij.openapi.diagnostic.logger
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.plugins.markdown.extensions.MarkdownCodeFenceCacheableProvider
+import org.intellij.plugins.markdown.injection.aliases.CodeFenceLanguageGuesser
 
 /**
  * Renders ```textile fences in the Markdown preview.
@@ -18,7 +20,7 @@ internal class TextileFenceProvider : MarkdownCodeFenceCacheableProvider(null) {
     override fun generateHtml(language: String, raw: String, node: ASTNode): String {
         val baseDir = collector?.file?.parent?.let { it.fileSystem.getNioPath(it) }
         val body = try {
-            TextileRenderer.render(raw, baseDir)
+            TextileRenderer.render(raw, baseDir, HIGHLIGHTER)
         } catch (e: Exception) {
             // Keep the preview usable while typing half-finished markup.
             LOG.warn("Textile rendering failed", e)
@@ -32,5 +34,11 @@ internal class TextileFenceProvider : MarkdownCodeFenceCacheableProvider(null) {
     private companion object {
         const val LANGUAGE = "textile"
         val LOG = logger<TextileFenceProvider>()
+
+        // Same language lookup (with aliases like "py") and coloring as Markdown code fences
+        val HIGHLIGHTER = TextileRenderer.Highlighter { language, code ->
+            CodeFenceLanguageGuesser.guessLanguageForInjection(language)
+                ?.let { HtmlSyntaxHighlighter.colorHtmlChunk(null, it, code).toString() }
+        }
     }
 }

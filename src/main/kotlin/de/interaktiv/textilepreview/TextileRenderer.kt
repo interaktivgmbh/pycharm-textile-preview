@@ -12,22 +12,45 @@ import kotlin.io.path.name
 
 /**
  * Textile to HTML, plus the Redmine bits that plain Textile does not know:
- * the `{{collapse(...)}}` macro and images referenced by file name only
- * (in Redmine they point to ticket attachments).
+ * the `{{collapse(...)}}` macro, `<pre><code class="python">` blocks and
+ * images referenced by file name only (in Redmine they point to ticket attachments).
  */
 object TextileRenderer {
     private val COLLAPSE = Regex(
         """^\{\{collapse(?:\((.*?)\))?[ \t]*\n(.*?)^}}[ \t]*$""",
         setOf(RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL),
     )
+    private val PRE = Regex(
+        """<pre>[ \t]*(?:<code(?:\s+class="([^"]*)")?\s*>)?\n?(.*?)\n?(?:</code>\s*)?</pre>""",
+        setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL),
+    )
+    private val PRE_PLACEHOLDER = Regex("""(?:<p>)?textilepreviewblock(\d+)(?:</p>)?""")
     private val IMG_SRC = Regex("""(<img\b[^>]*\bsrc=")([^"]+)(")""")
     private const val IMAGE_SEARCH_DEPTH = 3
     private const val COLLAPSE_DEFAULT_LABEL = "Show"
 
+    /** Colors [code] written in [language] and returns HTML, or null if the language is unknown. */
+    fun interface Highlighter {
+        fun highlight(language: String, code: String): String?
+    }
+
     /** [baseDir] is the folder of the Markdown file, used to find images. */
-    fun render(source: String, baseDir: Path?): String {
-        val html = renderWithCollapse(source.replace("\r\n", "\n"))
+    fun render(source: String, baseDir: Path?, highlighter: Highlighter? = null): String {
+        // Like Redmine, <pre> content is shown as written, so keep it away from Mylyn.
+        val preBlocks = mutableListOf<String>()
+        val withPlaceholders = PRE.replace(source.replace("\r\n", "\n")) { match ->
+            preBlocks += preBlock(match.groupValues[1], match.groupValues[2], highlighter)
+            "\n\ntextilepreviewblock${preBlocks.lastIndex}\n\n"
+        }
+        val html = PRE_PLACEHOLDER.replace(renderWithCollapse(withPlaceholders)) { preBlocks[it.groupValues[1].toInt()] }
         return if (baseDir == null) html else resolveImages(html, baseDir)
+    }
+
+    private fun preBlock(cssClass: String, code: String, highlighter: Highlighter?): String {
+        val language = cssClass.removePrefix("language-").trim()
+        if (language.isEmpty()) return "<pre><code>${escape(code)}</code></pre>"
+        val body = highlighter?.highlight(language, code) ?: escape(code)
+        return "<pre><code class=\"language-${escape(language)}\">$body</code></pre>"
     }
 
     private fun renderWithCollapse(source: String): String = buildString {
