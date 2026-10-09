@@ -3,10 +3,41 @@
   <name>Textile Preview</name>
   <vendor url="https://www.interaktiv.de">Interaktiv GmbH</vendor>
   <description><![CDATA[
-    Renders <code>```textile</code> code fences in the Markdown preview,
-    with a few Redmine extras: the <code>{{collapse}}</code> macro and
-    images referenced by file name only.
+    <p>
+      Write <b>Textile</b> inside Markdown files and see it rendered, live, in the
+      normal Markdown preview. Made for drafting Redmine tickets next to your code.
+    </p>
+    <p>Put the text into a <code>```textile</code> code block, everything around it stays Markdown:</p>
+    <pre>
+## Description
+
+```textile
+h3. What happens
+
+Searching with the language filter set to *German* still lists English pages.
+```</pre>
+    <h3>What you get</h3>
+    <ul>
+      <li>Textile rendered in the preview you already use, updated while you type</li>
+      <li>Redmine <code>{{collapse(Label)}}</code> sections that open and close</li>
+      <li>Images given by file name only, found next to the Markdown file</li>
+      <li>Redmine code blocks like <code>&lt;pre&gt;&lt;code class="python"&gt;</code>,
+          colored with your IDE color scheme</li>
+      <li>A copy button that copies the raw Textile, ready to paste into Redmine</li>
+    </ul>
+    <p>
+      Example, source code and issues on
+      <a href="https://github.com/interaktivgmbh/pycharm-textile-preview">GitHub</a>.
+    </p>
   ]]></description>
+
+  <change-notes><![CDATA[
+    <h3>0.1.0</h3>
+    <ul>
+      <li>First release: <code>textile</code> code fences in the Markdown preview</li>
+      <li>Redmine extras: <code>{{collapse}}</code>, images by file name, colored code blocks</li>
+    </ul>
+  ]]></change-notes>
 
   <depends>com.intellij.modules.platform</depends>
   <depends>org.intellij.plugins.markdown</depends>
