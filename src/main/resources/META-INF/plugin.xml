@@ -7,6 +7,10 @@
       Write <b>Textile</b> inside Markdown files and see it rendered, live, in the
       normal Markdown preview. Made for drafting Redmine tickets next to your code.
     </p>
+    <p>
+      <img src="https://raw.githubusercontent.com/interaktivgmbh/pycharm-textile-preview/main/docs/preview.png"
+           width="640" alt="Markdown file with a textile block, rendered in the preview">
+    </p>
     <p>Put the text into a <code>```textile</code> code block, everything around it stays Markdown:</p>
     <pre>
 ## Description
