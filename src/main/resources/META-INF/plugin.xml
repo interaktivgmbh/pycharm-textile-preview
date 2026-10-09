@@ -8,8 +8,9 @@
       normal Markdown preview. Made for drafting Redmine tickets next to your code.
     </p>
     <p>
-      <img src="https://raw.githubusercontent.com/interaktivgmbh/pycharm-textile-preview/main/docs/preview.png"
-           width="640" alt="Markdown file with a textile block, rendered in the preview">
+      <!-- Shown 1:1: the plugin page scales images without smoothing -->
+      <img src="https://raw.githubusercontent.com/interaktivgmbh/pycharm-textile-preview/main/docs/plugin-page.png"
+           alt="Textile code block in the editor and colored in the Markdown preview">
     </p>
     <p>Put the text into a <code>```textile</code> code block, everything around it stays Markdown:</p>
     <pre>
@@ -18,7 +19,7 @@
 ```textile
 h3. What happens
 
-Searching with the language filter set to *German* still lists English pages.
+Search ignores the *German* filter.
 ```</pre>
     <h3>What you get</h3>
     <ul>
@@ -36,6 +37,10 @@ Searching with the language filter set to *German* still lists English pages.
   ]]></description>
 
   <change-notes><![CDATA[
+    <h3>0.1.1</h3>
+    <ul>
+      <li>Sharp screenshot on the plugin page, no more sideways scrolling</li>
+    </ul>
     <h3>0.1.0</h3>
     <ul>
       <li>First release: <code>textile</code> code fences in the Markdown preview</li>
